@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: mar-rih/jenkins-x-kubernetes
+  - image: jenkins-x-kubernetes
     context: .
     docker: {}
   tagPolicy:
