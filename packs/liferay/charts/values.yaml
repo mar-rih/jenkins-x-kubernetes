@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: 558184000342.dkr.ecr.us-west-2.amazonaws.com/naseejmedad
+  repository: marrih/naseejmedad
   tag: client10
   pullPolicy: Always
 
