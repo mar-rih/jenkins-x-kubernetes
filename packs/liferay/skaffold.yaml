@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: jenkins-x-kubernetes
+  - image: naseejmedad
     context: .
     docker: {}
   tagPolicy:
@@ -21,8 +21,8 @@ profiles:
   deploy:
     helm:
       releases:
-      - name: jenkins-x-kubernetes
-        chartPath: charts/jenkins-x-kubernetes
+      - name: jx-liferay
+        chartPath: charts/jx-liferay
         setValueTemplates:
           image.repository: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}'
           image.tag: '{{.DIGEST_HEX}}'
