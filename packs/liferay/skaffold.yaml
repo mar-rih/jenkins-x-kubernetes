@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: naseejmedad
+  - image: naseej-medad/{{.APP_NAME}}
     context: .
     docker: {}
   tagPolicy:
