@@ -26,8 +26,10 @@ pipelines:
       steps:
       - sh: jx step changelog --version v\$(cat VERSION)
         name: changelog
-      - comment: release the helm chart
-        sh: jx step helm release
+      - dir: charts/$APP_NAME
+        steps:  
+        - comment: release the helm chart
+          sh: jx step helm release
       - comment: promote through all 'Auto' promotion Environments
         sh: jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)        
 
