@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: naseej-medad/{{.APP_NAME}}
+  - image: naseej-medad/{{.CLIENT_NAME}}
     context: .
     docker: {}
   tagPolicy:
@@ -21,8 +21,8 @@ profiles:
   deploy:
     helm:
       releases:
-      - name: jx-liferay
-        chartPath: charts/jx-liferay
+      - name: {{.CLIENT_NAME}}
+        chartPath: charts/{{.CLIENT_NAME}}
         setValueTemplates:
           image.repository: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}'
           image.tag: '{{.DIGEST_HEX}}'
