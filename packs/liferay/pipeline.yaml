@@ -18,6 +18,7 @@ pipelines:
       steps:
        - sh: echo \$(jx-release-version) > VERSION
        - sh: jx step tag --version \$(cat VERSION)
+       - sh: export CLIENT_NAME=$APP_NAME
        - sh: export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml
     build:
       steps:
