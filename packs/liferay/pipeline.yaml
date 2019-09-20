@@ -18,11 +18,11 @@ pipelines:
       steps:
        - sh: echo \$(jx-release-version) > VERSION
        - sh: jx step tag --version \$(cat VERSION)
-       - sh: echo $APP_NAME > APP_NAME
+       - sh: echo $DOCKER_REGISTRY_ORG > APP_NAME
        - sh: export VERSION=`cat VERSION` && export CLIENT_NAME=`cat APP_NAME` && skaffold build -f skaffold.yaml
     build:
       steps:
-       - sh: jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)
+       - sh: jx step post build --image $DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:\$(cat VERSION)
          name: container-build
     promote:
       steps:
@@ -33,5 +33,4 @@ pipelines:
         - comment: release the helm chart
           sh: jx step helm release
       - comment: promote through all 'Auto' promotion Environments
-        sh: jx promote -b --all-auto --timeout 1h --version \$(cat VERSION)        
-
+        sh: jx promote -b --all-auto --timeout 1h --version \$(cat VERSION)
