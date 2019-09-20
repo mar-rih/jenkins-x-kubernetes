@@ -7,7 +7,7 @@ build:
     docker: {}
   tagPolicy:
     envTemplate:
-      template: '{{.DOCKER_REGISTRY}}/{{.CLIENT_NAME}}/{{.IMAGE_NAME}}:{{.VERSION}}'
+      template: '{{.DOCKER_REGISTRY}}//{{.IMAGE_NAME}}:{{.VERSION}}'
   local: {}
 deploy:
   kubectl: {}
@@ -26,3 +26,4 @@ profiles:
         setValueTemplates:
           image.repository: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}'
           image.tag: '{{.DIGEST_HEX}}'
+          clientname: '{{.CLIENT_NAME}}'
