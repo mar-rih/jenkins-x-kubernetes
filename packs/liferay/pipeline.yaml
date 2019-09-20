@@ -16,7 +16,7 @@ pipelines:
   release:
     setVersion:
       steps:
-       - sh: export $APP_NAME= 'naseejmedad'
+       
        - sh: echo \$(jx-release-version) > VERSION
        - sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/naseejmedad' --version \$(cat VERSION)
 
