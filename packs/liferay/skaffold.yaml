@@ -26,4 +26,4 @@ profiles:
         setValueTemplates:
           image.repository: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}'
           image.tag: '{{.DIGEST_HEX}}'
-          clientname: '{{.CLIENT_NAME}}'
+          image.clientname: '{{.CLIENT_NAME}}'
