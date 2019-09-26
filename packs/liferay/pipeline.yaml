@@ -19,8 +19,8 @@ pipelines:
        
        - sh: echo \$(jx-release-version) > VERSION
        - sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/naseejmedad' --version \$(cat VERSION)
-       
-       - sh: "sed -i -e \'s/\'\"liferayclient10\"\'/\'\"\$APP_NAME\"\'/g\' charts/$APP_NAME/values.yaml"
+
+       - sh: sed -i -e \'s/\'\"liferayclient10\"\'/\'\"\$APP_NAME\"\'/g\' charts/$APP_NAME/values.yaml
 
        - sh: echo $DOCKER_REGISTRY_ORG > APP_NAME
        - sh: export VERSION=`cat VERSION` && export CLIENT_NAME=`cat APP_NAME` && skaffold build -f skaffold.yaml
