@@ -27,7 +27,7 @@ spec:
           - name: DB_TYPE
             value: POSTGRESQL
           - name: DB_ENDPOINT
-            value: jdbc:postgresql://postgres.liferay:5432/{{ .Values.clientname  }}
+            value: jdbc:postgresql://postgres.liferay:5432/medad_{{ include "liferay.dbname" . }}
           - name: DB_USER
             value: admin
           - name: DB_PASS
@@ -35,7 +35,7 @@ spec:
           name: {{ .Values.clientname  }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "/bin/bash", "-ce", "/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/catalina.sh run" ]
+          command: [ "/bin/bash", "-ce", "sed -i -e \"s|{ .DB_ENDPOINT }|$DB_ENDPOINT|g\" /opt/liferay-portal/portal-bd-POSTGRESQL.properties;sed -i -e \"s|{ .DB_PASS }|$DB_PASS|g\" /opt/liferay-portal/portal-bd-POSTGRESQL.properties;sed -i -e \"s|{ .DB_USER }|$DB_USER|g\" /opt/liferay-portal/portal-bd-POSTGRESQL.properties;/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/catalina.sh run" ]
           ports:
           - containerPort: {{ .Values.service.port }}
           resources:

@@ -43,3 +43,10 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+{{/*
+database label
+*/}}
+{{- define "liferay.dbname" -}}
+{{- $match := .Values.clientname -}}
+{{- $match | replace "-" "_" -}}
+{{- end -}}
