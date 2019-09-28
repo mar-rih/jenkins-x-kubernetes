@@ -15,18 +15,16 @@ pipelines:
 
   release:
     setVersion:
-      steps:
-       
+      steps:       
        - sh: echo \$(jx-release-version) > VERSION
-       - sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/naseejmedad' --version \$(cat VERSION)
-
+       - sh: echo $APP_NAME > CLIENT_NAME
        - sh: sed -i -e \'s/\'\"liferayclient10\"\'/\'\"\$APP_NAME\"\'/g\' charts/$APP_NAME/values.yaml
-
+       - sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME' --version \$(cat VERSION)
        - sh: echo $DOCKER_REGISTRY_ORG > APP_NAME
-       - sh: export VERSION=`cat VERSION` && export CLIENT_NAME=`cat APP_NAME` && skaffold build -f skaffold.yaml
+       - sh: export VERSION=`cat VERSION` && export CLIENT_NAME=`cat CLIENT_NAME` && skaffold build -f skaffold.yaml
     build:
       steps:
-       - sh: jx step post build --image $DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/naseejmedad:\$(cat VERSION)
+       - sh: jx step post build --image $DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:\$(cat VERSION)
          name: container-build
     promote:
       steps:
