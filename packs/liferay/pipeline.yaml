@@ -17,11 +17,10 @@ pipelines:
     setVersion:
       steps:       
        - sh: echo \$(jx-release-version) > VERSION
-       - sh: echo $APP_NAME > CLIENT_NAME
-       #- sh: sed -i -e \'s/\'\"liferayclient10\"\'/\'\"\$APP_NAME\"\'/g\' charts/$APP_NAME/values.yaml
+       - sh: echo $DOCKER_REGISTRY_ORG > CLIENT_NAME
+       - sh: echo $APP_NAME > APP_NAME
        - sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME' --version \$(cat VERSION)
-       - sh: echo $DOCKER_REGISTRY_ORG > APP_NAME
-       - sh: export VERSION=`cat VERSION` && export CLIENT_NAME=`cat CLIENT_NAME` && skaffold build -f skaffold.yaml
+       - sh: export VERSION=`cat VERSION` && export APP_NAME=`cat APP_NAME` && export CLIENT_NAME=`cat CLIENT_NAME` && skaffold build -f skaffold.yaml
     build:
       steps:
        - sh: jx step post build --image $DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:\$(cat VERSION)
