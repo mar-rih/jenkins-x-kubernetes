@@ -27,7 +27,7 @@ spec:
           - name: DB_TYPE
             value: POSTGRESQL
           - name: DB_ENDPOINT
-            value: jdbc:postgresql://postgres.liferay:5432/medad_{{ include "liferay.dbname" . }}
+            value: jdbc:postgresql://postgres.liferay:5432/{{ .Values.dbname }}
           - name: DB_USER
             value: admin
           - name: DB_PASS

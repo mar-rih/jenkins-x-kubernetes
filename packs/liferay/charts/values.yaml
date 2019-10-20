@@ -10,7 +10,8 @@ image:
   pullPolicy: Always
 
 
-clientname: liferayclient10
+clientname: mddl-client10
+dbname: mddl-client10
 imagePullSecrets:
   - name:  aws-registry
 nameOverride: ""
