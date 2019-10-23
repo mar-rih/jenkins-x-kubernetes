@@ -1,0 +1,29 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  artifacts:
+  - image: naseejmedad
+    context: .
+    docker: {}
+  tagPolicy:
+    envTemplate:
+      template: '{{.DOCKER_REGISTRY}}/{{.CLIENT_NAME}}/{{.APP_NAME}}:{{.VERSION}}'
+  local: {}
+deploy:
+  kubectl: {}
+profiles:
+- name: dev
+  build:
+    tagPolicy:
+      envTemplate:
+        template: '{{.DOCKER_REGISTRY}}/{{.CLIENT_NAME}}/{{.APP_NAME}}:{{.DIGEST_HEX}}'
+    local: {}
+  deploy:
+    helm:
+      releases:
+      - name: '{{.CLIENT_NAME}}'
+        chartPath: charts/'{{.CLIENT_NAME}}'
+        setValueTemplates:
+          image.repository: '{{.DOCKER_REGISTRY}}/{{.CLIENT_NAME}}/{{.APP_NAME}}'
+          image.tag: '{{.DIGEST_HEX}}'
+          image.clientname: '{{.CLIENT_NAME}}'

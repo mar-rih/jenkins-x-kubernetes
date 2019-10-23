@@ -1,0 +1,37 @@
+extends:
+  import: classic
+  file: pipeline.yaml
+agent:
+  label: jenkins-maven
+  container: maven
+pipelines:
+  pullRequest:
+    build:
+      steps:
+        - sh: skaffold version
+          name: skaffold-version
+        - sh: export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml
+          name: container-build
+
+  release:
+    setVersion:
+      steps:       
+       - sh: echo \$(jx-release-version) > VERSION
+       - sh: echo $DOCKER_REGISTRY_ORG > CLIENT_NAME
+       - sh: echo $APP_NAME > APP_NAME
+       - sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME' --version \$(cat VERSION)
+       - sh: export VERSION=`cat VERSION` && export APP_NAME=`cat APP_NAME` && export CLIENT_NAME=`cat CLIENT_NAME` && skaffold build -f skaffold.yaml
+    build:
+      steps:
+       - sh: jx step post build --image $DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:\$(cat VERSION)
+         name: container-build
+    promote:
+      steps:
+      - sh: jx step changelog --version v\$(cat VERSION)
+        name: changelog
+      - dir: charts/REPLACE_ME_APP_NAME
+        steps:
+        - comment: release the helm chart
+          sh: jx step helm release
+      - comment: promote through all 'Auto' promotion Environments
+        sh: jx promote -b --env=$DOCKER_REGISTRY_ORG-stg --timeout 1h --version \$(cat VERSION)
