@@ -32,6 +32,14 @@ spec:
             value: admin
           - name: DB_PASS
             value: 1q2q2w3w
+          - name: MEDADPLUGINS
+            value: AssetPublisherIcons-hook,BreadcrumbPortlet-hook
+          - name: ARTIFACTORYHOST
+            value: http://nexus.jx.35.166.225.194.nip.io
+          - name: ARTIFACTORYREPO
+            value: MEDAD
+          - name: ARTIFACTORYGROUP
+            value: MEDAD-DL-PLUGINS            
           name: {{ .Values.clientname  }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
