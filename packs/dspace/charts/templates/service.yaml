@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dspace.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: dspace-app
+{{ include "dspace.labels" . | indent 4 }}
+spec:
+  ports:
+  - protocol: TCP
+    name: "8080"  
+    port: {{ .Values.service.port }}
+  selector:
+    app: dspace-app

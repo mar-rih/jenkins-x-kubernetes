@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dspace-create-admin
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: dspace-app
+{{ include "dspace.labels" . | indent 4 }}  
+spec:
+  template:
+    spec:
+      volumes:
+      - name: "assetstore"
+        hostPath:
+          path: "/tmp/vols/assetstore"
+      - name: my-local-config-map
+        configMap:
+          name: local-config-map
+      containers:
+      - name: dspace-cli
+        image: dspace/dspace-cli:dspace-6_x
+        command: [
+          "/dspace/bin/dspace",
+          "create-administrator",
+          "-e", "test@test.edu",
+          "-f", "test",
+          "-l", "admin",
+          "-p", "admin",
+          "-c", "en"
+        ]
+        volumeMounts:
+        - mountPath: "/dspace/assetstore"
+          name: "assetstore"
+        - mountPath: "/dspace/config/local.cfg"
+          name: "my-local-config-map"
+          subPath: local.cfg
+      restartPolicy: Never
