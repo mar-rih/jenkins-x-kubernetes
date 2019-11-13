@@ -12,6 +12,11 @@ image:
 
 clientname: mddl-client10
 dbname: mddl-client10
+medadplugins: ""
+artifacthost: "http://nexus.jx.35.166.225.194.nip.io"
+artifactrepo: ""
+artifactorygroup: ""
+
 imagePullSecrets:
   - name:  aws-registry
 nameOverride: ""

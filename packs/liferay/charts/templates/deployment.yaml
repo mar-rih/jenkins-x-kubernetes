@@ -33,17 +33,18 @@ spec:
           - name: DB_PASS
             value: 1q2q2w3w
           - name: MEDADPLUGINS
-            value: AssetPublisherIcons-hook,BreadcrumbPortlet-hook
+            value: {{ .Values.medadplugins }}
           - name: ARTIFACTORYHOST
-            value: http://nexus.jx.35.166.225.194.nip.io
+            value: {{ .Values.artifacthost }}
           - name: ARTIFACTORYREPO
-            value: MEDAD
+            value: {{ .Values.artifactrepo }}
           - name: ARTIFACTORYGROUP
-            value: MEDAD-DL-PLUGINS            
+            value: {{ .Values.artifactorygroup }}
           name: {{ .Values.clientname  }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "/bin/bash", "-ce", "sed -i -e \"s|{ .DB_ENDPOINT }|$DB_ENDPOINT|g\" /opt/liferay-portal/portal-bd-POSTGRESQL.properties;sed -i -e \"s|{ .DB_PASS }|$DB_PASS|g\" /opt/liferay-portal/portal-bd-POSTGRESQL.properties;sed -i -e \"s|{ .DB_USER }|$DB_USER|g\" /opt/liferay-portal/portal-bd-POSTGRESQL.properties;cp /opt/liferay-portal/deploy-tmp/* /opt/liferay-portal/deploy/;/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/catalina.sh run" ]
+          
+          command: [ "/bin/bash", "-ce", "/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/medadEntrypoint.sh" ]
           ports:
           - containerPort: {{ .Values.service.port }}
           resources:

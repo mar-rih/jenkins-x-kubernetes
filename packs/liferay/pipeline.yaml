@@ -19,7 +19,7 @@ pipelines:
        - sh: echo \$(jx-release-version) > VERSION
        #- sh: echo $DOCKER_REGISTRY_ORG > CLIENT_NAME
        #- sh: echo $APP_NAME > APP_NAME
-       #- sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME' --version \$(cat VERSION)
+       - sh: jx step tag  --charts-value-repository='$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME' --version \$(cat VERSION)
        #- sh: export VERSION=`cat VERSION` && export APP_NAME=`cat APP_NAME` && export CLIENT_NAME=`cat CLIENT_NAME` && skaffold build -f skaffold.yaml
          name: skaffold-version
        - sh: export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml
