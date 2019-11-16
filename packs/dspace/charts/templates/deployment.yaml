@@ -18,10 +18,10 @@ data:
     </tomcat-users>
   local.cfg: |-
     dspace.dir = /dspace
-    db.url = jdbc:postgresql://postgres.liferay:5432/dspace_client01_stg
-    dspace.hostname = dspace-service
-    dspace.baseUrl = http://dspace-service:8080
-    solr.server=http://dspace-service:8080/solr
+    db.url = {{ .Values.dbhost }}.{{ .Values.dbname }}
+    dspace.hostname = ds.{{ .Release.Namespace }}.{{ .host }}
+    dspace.baseUrl = http://ds.{{ .Release.Namespace }}.{{ .host }}:8080
+    solr.server=http://ds.{{ .Release.Namespace }}.{{ .host }}:8080/solr
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -48,7 +48,20 @@ spec:
         app: dspace-app
     spec:
       containers:
-      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        - env:
+          - name: MEDAD_DSPACE_URL
+            value: {{ .MEDAD_DSPACE_URL }}
+          - name: MEDAD_DSPACE_URL_EMAIL
+            value: {{ .MEDAD_DSPACE_URL_EMAIL }}
+          - name: MEDAD_DSPACE_URL_PASSWORD
+            value: {{ .MEDAD_DSPACE_URL_PASSWORD }}
+          - name: MEDAD_DSPACE_URL_COMM
+            value: {{ .MEDAD_DSPACE_URL_COMM }}
+          - name: DSPACE_MEDAD_COMMUNITY
+            value: {{ .DSPACE_MEDAD_COMMUNITY }}
+          - name: MEDAD_DSPACE_URL_OAUTH_SECRET
+            value: {{ .MEDAD_DSPACE_URL_OAUTH_SECRET }}
+      - image:  {{ .Values.image.repository }}:{{ .Values.image.tag }}
         name: dspace
         ports:
         - containerPort: 8080

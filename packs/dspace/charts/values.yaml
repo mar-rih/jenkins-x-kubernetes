@@ -10,11 +10,20 @@ image:
   pullPolicy: Always
 
 clientname: clientx-stg
-dbname: mdds-clientx
+dbname: dspace_client01_stg
+dbhost: jdbc:postgresql://postgres.liferay:5432/
 imagePullSecrets:
   - name:  aws-registry
 nameOverride: ""
 fullnameOverride: ""
+
+clientconfig:
+  MEDAD_DSPACE_URL =http://dspace.md-client01-stg.35.166.225.194.nip.io/
+  MEDAD_DSPACE_URL_EMAIL = ahmed.abdelsalam@naseej.com
+  MEDAD_DSPACE_URL_PASSWORD =AAS@ADMIN
+  MEDAD_DSPACE_URL_COMM = 992311a1-20b1-4bc8-9255-e79cd2f10d68
+  DSPACE_MEDAD_COMMUNITY = 992311a1-20b1-4bc8-9255-e79cd2f10d68
+  MEDAD_DSPACE_URL_OAUTH_SECRET= secret
 
 service:
   port: 8080
