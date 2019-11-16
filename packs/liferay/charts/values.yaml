@@ -10,12 +10,28 @@ image:
   pullPolicy: Always
 
 
-clientname: mddl-client10
 dbname: mddl-client10
+
+clientname: ""
+cleintConfig:
+  MEDAD_DL_CLIENT_DSPACE_URL: ""
+  MEDAD_DSPACE_REST_URL: ""
+  MEDAD_DSPACE_COMMUNITY: ""
+  MEDAD_SUBJECT_GROUP_COMM_ID: ""
+  MEDAD_TYPE_GROUP_COMM_ID: ""
+  MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_ID: ""
+  
+  MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_EMAIL: ""
+  MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_NAME: ""
+  MEDAD_DL_CLIENT_MAIL_ID: ""
+  MEDAD_DL_CLIENT_MAIL_FROM_EMAIL: ""
+  MEDAD_DL_CLIENT_MAIL_SERVICE_NAME: ""
+
 medadplugins: ""
 artifacthost: "http://nexus.jx.35.166.225.194.nip.io"
 artifactrepo: ""
 artifactorygroup: ""
+
 
 imagePullSecrets:
   - name:  aws-registry

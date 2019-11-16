@@ -40,11 +40,33 @@ spec:
             value: {{ .Values.artifactrepo }}
           - name: ARTIFACTORYGROUP
             value: {{ .Values.artifactorygroup }}
+          - name: MEDAD_DL_CLIENT_DSPACE_URL
+            value: {{ .Values.cleintConfig.MEDAD_DL_CLIENT_DSPACE_URL }}
+          - name: MEDAD_DSPACE_REST_URL
+            value: {{ .Values.cleintConfig.MEDAD_DSPACE_REST_URL }}
+          - name: MEDAD_DSPACE_COMMUNITY
+            value: {{ .Values.cleintConfig.MEDAD_DSPACE_COMMUNITY }}
+          - name: MEDAD_SUBJECT_GROUP_COMM_ID
+            value: {{ .Values.cleintConfig.MEDAD_SUBJECT_GROUP_COMM_ID }}
+          - name: MEDAD_TYPE_GROUP_COMM_ID
+            value: {{ .Values.cleintConfig.MEDAD_TYPE_GROUP_COMM_ID }}
+          - name: MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_ID
+            value: {{ .Values.cleintConfig.MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_ID }}
+          - name: MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_EMAIL
+            value: {{ .Values.cleintConfig.MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_EMAIL }}
+          - name: MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_NAME
+            value: {{ .Values.cleintConfig.MEDAD_DL_CLIENT_GOOGLE_ANALYTICS_NAME }}
+          - name: MEDAD_DL_CLIENT_MAIL_ID
+            value: {{ .Values.cleintConfig.MEDAD_DL_CLIENT_MAIL_ID }}
+          - name: MEDAD_DL_CLIENT_MAIL_FROM_EMAIL
+            value: {{ .Values.cleintConfig.MEDAD_DL_CLIENT_MAIL_FROM_EMAIL }}
+          - name: MEDAD_DL_CLIENT_MAIL_SERVICE_NAME
+            value: {{ .Values.cleintConfig.MEDAD_DL_CLIENT_MAIL_SERVICE_NAME }}
           name: {{ .Values.clientname  }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           
-          command: [ "/bin/bash", "-ce", "/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/medadEntrypoint.sh" ]
+          command: [ "/bin/bash", "-ce", "/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/Entrypoint.sh" ]
           ports:
           - containerPort: {{ .Values.service.port }}
           resources:
